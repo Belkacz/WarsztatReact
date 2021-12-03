@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { API_KEY, API_URL } from "./api/constants";
 
 function AddTask({ funtionFromParent }) {
   const [newTaskState, setnewTaskState] = useState([]);
@@ -24,14 +25,17 @@ function AddTask({ funtionFromParent }) {
       let data = {
         title: newTaskState.Title,
         description: newTaskState.Description,
+        status:"open"
       };
       pushByFetchOnClick(data);
-      const resp = await fetch(URL, {
+      const resp = await fetch(`${API_URL}/tasks`, {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
+          Authorization: API_KEY,
           "Content-Type": "application/json",
         },
+        
       });
     } catch (error) {
       console.log(error);
@@ -57,7 +61,7 @@ function AddTask({ funtionFromParent }) {
             <input
               type="text"
               className="form-control"
-              name="description"
+              name="Description"
               placeholder="Description"
               value={newTaskState.description}
               onChange={updateTaskState}

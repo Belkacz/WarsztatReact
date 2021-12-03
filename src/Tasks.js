@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { API_KEY, API_URL, getTasks } from "./api/constants";
 
-function Tasks() {
+function Tasks({props}) {
   const [tasks, setTasks] = useState([]);
+  // console.log(props);
+
+
 
   useEffect(() => {
     const getTasksLite = async () => {
@@ -18,11 +21,10 @@ function Tasks() {
   return (
     <>
       <section className="card mt-5 shadow-sm">
-        
-          {tasks.length ? (
-            tasks.map(({ id, title, description, status }) => (
-              <div key={id}>
-                <div className="card-header d-flex justify-content-between align-items-center">
+        {tasks.length ? (
+          tasks.map(({ id, title, description, status }) => (
+            <div key={id}>
+              <div className="card-header d-flex justify-content-between align-items-center">
                 <div>
                   <h5>{title}</h5>
                   <h6 className="card-subtitle text-muted">{description}</h6>
@@ -33,12 +35,18 @@ function Tasks() {
         Przyciski "Add operation" i "Finish" mają być widoczne 
         tylko jeżeli status zadania jest "open" 
       --> */}
-                  <button hidden={status==="open" ? false : true} className="btn btn-info btn-sm mr-2">
+                  <button
+                    hidden={status === "open" ? false : true}
+                    className="btn btn-info btn-sm mr-2"
+                  >
                     Add operation
                     <i className="fas fa-plus-circle ml-1"></i>
                   </button>
 
-                  <button hidden={status==="open" ? false : true} className="btn btn-dark btn-sm">
+                  <button
+                    hidden={status === "open" ? false : true}
+                    className="btn btn-dark btn-sm"
+                  >
                     Finish
                     <i className="fas fa-archive ml-1"></i>
                   </button>
@@ -52,14 +60,13 @@ function Tasks() {
                     <i className="fas fa-trash false"></i>
                   </button>
                 </div>
-               <br></br>
+                <br></br>
               </div>
-              </div>
-            ))
-          ) : (
-            <p>loading...</p>
-          )}
-        
+            </div>
+          ))
+        ) : (
+          <p>loading...</p>
+        )}
 
         {/* 
   <!-- Komponent Operations --> */}

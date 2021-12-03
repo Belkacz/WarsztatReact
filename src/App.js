@@ -3,17 +3,20 @@ import AddTask from "./AddTask";
 import Tasks from "./Tasks";
 
 function App() {
-  const [tasks, setTasks] = useState({});
+  const [tasksadd, setTasks] = useState([]);
 
   function reciver(obj) {
-    console.log(obj);
     setTasks((prev) => [...prev, obj]);
+  }
+
+  function refreshList(obj) {
+    setTasks(obj);
   }
 
   return (
     <div>
-      <AddTask funtionToChild={reciver} />
-      <Tasks />
+      <AddTask funtionFromParent={reciver} />
+      <Tasks props={tasksadd} />
     </div>
   );
 }
