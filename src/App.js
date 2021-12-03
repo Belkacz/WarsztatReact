@@ -1,22 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AddTask from "./AddTask";
 import Tasks from "./Tasks";
+import { API_KEY, API_URL, getTasks } from "./api/constants";
+
 
 function App() {
-  const [tasksadd, setTasks] = useState([]);
+  const [tasks, setTasks] = useState([]);
+
+  useEffect(() => {
+    const getTasksLite = async () => {
+      const resp = await fetch(`${API_URL}/tasks`, {
+        headers: { Authorization: API_KEY },
+      });
+      const { data } = await resp.json();
+      setTasks(data);
+    };
+    getTasksLite();
+  }, [tasks]);
 
   function reciver(obj) {
     setTasks((prev) => [...prev, obj]);
   }
 
-  function refreshList(obj) {
-    setTasks(obj);
-  }
-
   return (
     <div>
       <AddTask funtionFromParent={reciver} />
-      <Tasks props={tasksadd} />
+      <Tasks props={tasks} />
     </div>
   );
 }

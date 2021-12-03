@@ -2,27 +2,27 @@ import React, { useEffect, useState } from "react";
 import { API_KEY, API_URL, getTasks } from "./api/constants";
 
 function Tasks({props}) {
-  const [tasks, setTasks] = useState([]);
+  // const [tasks, setTasks] = useState([]);
   // console.log(props);
 
 
 
-  useEffect(() => {
-    const getTasksLite = async () => {
-      const resp = await fetch(`${API_URL}/tasks`, {
-        headers: { Authorization: API_KEY },
-      });
-      const { data } = await resp.json();
-      setTasks(data);
-    };
-    getTasksLite();
-  }, []);
+  // useEffect(() => {
+  //   const getTasksLite = async () => {
+  //     const resp = await fetch(`${API_URL}/tasks`, {
+  //       headers: { Authorization: API_KEY },
+  //     });
+  //     const { data } = await resp.json();
+  //     setTasks(data);
+  //   };
+  //   getTasksLite();
+  // }, []);
 
   return (
     <>
       <section className="card mt-5 shadow-sm">
-        {tasks.length ? (
-          tasks.map(({ id, title, description, status }) => (
+        {props.length ? (
+          props.map(({ id, title, description, status }) => (
             <div key={id}>
               <div className="card-header d-flex justify-content-between align-items-center">
                 <div>
