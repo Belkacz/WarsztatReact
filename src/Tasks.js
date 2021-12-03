@@ -1,22 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { API_KEY, API_URL, getTasks } from "./api/constants";
 
-function Tasks({props}) {
-  // const [tasks, setTasks] = useState([]);
-  // console.log(props);
+function Tasks({ props, remover }) {
 
-
-
-  // useEffect(() => {
-  //   const getTasksLite = async () => {
-  //     const resp = await fetch(`${API_URL}/tasks`, {
-  //       headers: { Authorization: API_KEY },
-  //     });
-  //     const { data } = await resp.json();
-  //     setTasks(data);
-  //   };
-  //   getTasksLite();
-  // }, []);
 
   return (
     <>
@@ -51,12 +37,12 @@ function Tasks({props}) {
                     <i className="fas fa-archive ml-1"></i>
                   </button>
 
-                  {/* 
+                  {/* onClick={(e) => remover(id)}
       <!-- 
         Przycisk usuwania ma być widoczny tylko 
         jeżeli nie ma żadnych operacji w zadaniu
-      --> */}
-                  <button className="btn btn-outline-danger btn-sm ml-2">
+      --> onClick={()=>remover(id)} */}
+                  <button onClick={(e) => remover(id)} className="btn btn-outline-danger btn-sm ml-2">
                     <i className="fas fa-trash false"></i>
                   </button>
                 </div>
