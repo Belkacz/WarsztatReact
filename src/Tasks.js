@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { API_KEY, API_URL, getTasks } from "./api/constants";
-import AddOperations from "./AddOperations";
+import Operations from "./Operations";
 
 function Tasks({ props, remover, finisher }) {
+
+  const [operationsForm, setForm] = useState(false)
+  const [operations, setOperations] =useState([])
+  
   return (
     <div>
       <section class="card mt-5 shadow-sm ">
@@ -37,11 +41,7 @@ function Tasks({ props, remover, finisher }) {
                     <i className="fas fa-archive ml-1"></i>
                   </button>
 
-                  {/* onClick={(e) => remover(id)}
-      <!-- 
-        Przycisk usuwania ma być widoczny tylko 
-        jeżeli nie ma żadnych operacji w zadaniu
-      --> onClick={()=>remover(id)} */}
+
                   <button
                     hidden={status === "open" ? true : false}
                     onClick={(e) => remover(id, title, description, status)}
@@ -53,7 +53,7 @@ function Tasks({ props, remover, finisher }) {
                 <br></br>
               </div>
               <div>
-                <AddOperations props={id} />
+                <Operations taskId={id} />
               </div>
             </div>
           ))

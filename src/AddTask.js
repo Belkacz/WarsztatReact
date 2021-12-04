@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { API_KEY, API_URL } from "./api/constants";
 
 function AddTask({ funtionFromParent }) {
-  const [newTaskState, setnewTaskState] = useState({Title:"", Description:"", status:"open"});
+  const [newTaskState, setnewTaskState] = useState({
+    Title: "",
+    Description: "",
+    status: "open",
+  });
 
   const pushByFetchOnClick = (data) => {
     if (typeof funtionFromParent === "function") {
@@ -25,7 +29,7 @@ function AddTask({ funtionFromParent }) {
       let data = {
         title: newTaskState.Title,
         description: newTaskState.Description,
-        status:"open"
+        status: "open",
       };
       pushByFetchOnClick(data);
       const resp = await fetch(`${API_URL}/tasks`, {
@@ -35,9 +39,7 @@ function AddTask({ funtionFromParent }) {
           Authorization: API_KEY,
           "Content-Type": "application/json",
         },
-        
       });
-    
     } catch (error) {
       console.log(error);
     }
