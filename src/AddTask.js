@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { API_KEY, API_URL } from "./api/constants";
 
 function AddTask({ funtionFromParent }) {
-  const [newTaskState, setnewTaskState] = useState([]);
+  const [newTaskState, setnewTaskState] = useState({Title:"", Description:"", status:"open"});
 
   const pushByFetchOnClick = (data) => {
     if (typeof funtionFromParent === "function") {
@@ -37,6 +37,7 @@ function AddTask({ funtionFromParent }) {
         },
         
       });
+    
     } catch (error) {
       console.log(error);
     }

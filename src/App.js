@@ -5,7 +5,7 @@ import { API_KEY, API_URL, getTasks } from "./api/constants";
 
 function App() {
   const [tasks, setTasks] = useState([]);
-  const [fresh, setFresh] = useState(true);
+  const [refresh, setReFresh] = useState(true);
 
   useEffect(() => {
     const getTasksLite = async () => {
@@ -15,43 +15,53 @@ function App() {
       const { data } = await resp.json();
       setTasks(data);
     };
-    console.log(tasks);
-
+    console.log("useeefect");
     getTasksLite();
-    setFresh(false);
-  }, [fresh]);
+    setReFresh(false);
+  }, [refresh]);
 
   const remover = async (id) => {
-    if (typeof setTasks === "function") {
-      const resp = await fetch(`${API_URL}/tasks/${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: API_KEY,
-          "Content-Type": "application/json",
-        },
-      });
-      setFresh(true);
-    }
+    const resp = await fetch(`${API_URL}/tasks/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: API_KEY,
+        "Content-Type": "application/json",
+      },
+    });
+    setReFresh(true);
   };
 
   function reciver(obj) {
-    setFresh(true);
     setTasks((prev) => [...prev, obj]);
+    setReFresh(true);
   }
 
-  // const remove = async (id) => {
-  //   try {
-  //     const resp = await fetch(`${API_URL}/tasks/${id}`, { method: "DELETE" });
-  //     setTasks((prev) => prev.filter((task) => task.id !== id));
-  //   } catch (error) {
-  //     throw new Error(error);
-  //   }
-  // };
+  const finisher = async (id, title, description, status) => {
+    let data = {
+      id: id,
+      title: "close",
+      description: description,
+      status: "close",
+    };
+    console.log(data);
+
+    const resp = await fetch(`${API_URL}/tasks/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(data),
+      headers: {
+        Authorization: API_KEY,
+        "Content-Type": "application/json",
+      },
+    });
+    setReFresh(true);
+  };
 
   return (
-    <div id="app" className="container mb-5">
-      <AddTask funtionFromParent={reciver} />
-      <Tasks props={tasks} remover={remover} />
+    <div id="app" className="container mb-5 ">
+      <div className="card-body">
+        <AddTask funtionFromParent={reciver} />
+        <Tasks props={tasks} remover={remover} finisher={finisher} />
+      </div>
     </div>
   );
 }
