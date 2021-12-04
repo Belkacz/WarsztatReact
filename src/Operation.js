@@ -1,7 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { API_KEY, API_URL, getTasks } from "./api/constants";
 
-export default function Operation({ id, description, timeSpent }) {
+export default function Operation({ id, description, timeSpent , setReFresh}) {
+  console.log(id);
+  const remover = async (e, id) => {
+    console.log(id);
+    e.preventDefault();
+    const resp = await fetch(`${API_URL}/operations/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: API_KEY,
+        "Content-Type": "application/json",
+      },
+    });
+    setReFresh(true)
+  };
+
   return (
     <div>
       <li className="list-group-item d-flex justify-content-between align-items-center">
@@ -23,7 +37,12 @@ export default function Operation({ id, description, timeSpent }) {
                 <i class="fas fa-save"></i>
               </button>
 
-              <button class="btn btn-outline-dark">
+              <button
+                onClick={(e) => {
+                  remover(e, id);
+                }}
+                class="btn btn-outline-dark"
+              >
                 <i class="fas fa-times false"></i>
               </button>
             </div>

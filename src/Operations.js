@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { API_KEY, API_URL, getTasks } from "./api/constants";
 import Operation from "./Operation";
 
-export default function Operations({ taskId }) {
+export default function Operations({ taskId, operationsForm }) {
   const [newOperation, setNewOperation] = useState({
     description: "",
     timeSpent: 0,
@@ -60,8 +60,8 @@ export default function Operations({ taskId }) {
 
   return (
     <div>
-      <div className="card-body">
-        <form>
+      <div hidden={operationsForm} className="card-body">
+        <form >
           <div className="input-group">
             <input
               type="text"
@@ -91,7 +91,12 @@ export default function Operations({ taskId }) {
         {operations.map(({ id, description, timeSpent }) => {
           return (
             <div key={id}>
-              <Operation description={description} timeSpent={timeSpent} />
+              <Operation
+                setReFresh={setReFresh}
+                description={description}
+                id={id}
+                timeSpent={timeSpent}
+              />
             </div>
           );
         })}

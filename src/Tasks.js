@@ -3,10 +3,9 @@ import { API_KEY, API_URL, getTasks } from "./api/constants";
 import Operations from "./Operations";
 
 function Tasks({ props, remover, finisher }) {
+  const [operationsForm, setForm] = useState(true);
+  const [operations, setOperations] = useState([]);
 
-  const [operationsForm, setForm] = useState(false)
-  const [operations, setOperations] =useState([])
-  
   return (
     <div>
       <section class="card mt-5 shadow-sm ">
@@ -20,11 +19,11 @@ function Tasks({ props, remover, finisher }) {
                 </div>
 
                 <div className="display-inline-block">
-                  {/* <!-- 
-        Przyciski "Add operation" i "Finish" mają być widoczne 
-        tylko jeżeli status zadania jest "open" 
-      --> */}
+
                   <button
+                    onClick={(e) => {
+                      setForm(false);
+                    }}
                     hidden={status === "open" ? false : true}
                     className="btn btn-info btn-sm mr-2"
                   >
@@ -41,7 +40,6 @@ function Tasks({ props, remover, finisher }) {
                     <i className="fas fa-archive ml-1"></i>
                   </button>
 
-
                   <button
                     hidden={status === "open" ? true : false}
                     onClick={(e) => remover(id, title, description, status)}
@@ -53,7 +51,7 @@ function Tasks({ props, remover, finisher }) {
                 <br></br>
               </div>
               <div>
-                <Operations taskId={id} />
+                <Operations taskId={id} operationsForm={operationsForm} />
               </div>
             </div>
           ))
