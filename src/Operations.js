@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { API_KEY, API_URL, getTasks } from "./api/constants";
+import Operation from "./Operation";
 
 export default function Operations({ taskId }) {
   const [newOperation, setNewOperation] = useState({
@@ -26,7 +27,7 @@ export default function Operations({ taskId }) {
         description: newOperation.description,
         timeSpent: newOperation.timeSpent,
       };
-      const resp = await fetch(`${API_URL}/tasks/:${taskId}/operations`, {
+      const resp = await fetch(`${API_URL}/tasks/${taskId}/operations`, {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
@@ -34,27 +35,28 @@ export default function Operations({ taskId }) {
           "Content-Type": "application/json",
         },
       });
+      setReFresh(true);
     } catch (error) {
       console.log(error);
     }
   };
 
-  // useEffect(() => {
-  //   try {
-  //     const getOperations = async () => {
-  //       const resp = await fetch(`${API_URL}/tasks/${taskId}/operations`, {
-  //         headers: { Authorization: API_KEY },
-  //       });
-  //       const { data } = await resp.json();
-  //       setOperations(data);
-  //     };
-  //     console.log("getoperations");
-  //     getOperations();
-  //     setReFresh(false);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }, [refresh]);
+  useEffect(() => {
+    try {
+      const getOperations = async () => {
+        const resp = await fetch(`${API_URL}/tasks/${taskId}/operations`, {
+          headers: { Authorization: API_KEY },
+        });
+        const { data } = await resp.json();
+        setOperations(data);
+      };
+      getOperations();
+      console.log("useeffect2");
+      setReFresh(false);
+    } catch (error) {
+      console.log(error);
+    }
+  }, [refresh]);
 
   return (
     <div>
@@ -86,11 +88,13 @@ export default function Operations({ taskId }) {
       </div>
 
       <ul className="list-group list-group-flush">
-        {/* {operations.map(({descriprion})=>{
-         return (<div>
-           <p>1321</p>
-         </div>)
-        })} */}
+        {operations.map(({ id, description, timeSpent }) => {
+          return (
+            <div key={id}>
+              <Operation description={description} timeSpent={timeSpent} />
+            </div>
+          );
+        })}
       </ul>
     </div>
   );

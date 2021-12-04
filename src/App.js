@@ -43,7 +43,6 @@ function App() {
       description: description,
       status: "close",
     };
-    console.log(data);
 
     const resp = await fetch(`${API_URL}/tasks/${id}`, {
       method: "PUT",
