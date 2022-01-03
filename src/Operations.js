@@ -61,7 +61,7 @@ export default function Operations({ taskId, operationsForm }) {
   return (
     <div>
       <div hidden={operationsForm} className="card-body">
-        <form >
+        <form>
           <div className="input-group">
             <input
               type="text"
@@ -88,18 +88,21 @@ export default function Operations({ taskId, operationsForm }) {
       </div>
 
       <ul className="list-group list-group-flush">
-        {operations.map(({ id, description, timeSpent }) => {
-          return (
-            <div key={id}>
-              <Operation
-                setReFresh={setReFresh}
-                description={description}
-                id={id}
-                timeSpent={timeSpent}
-              />
-            </div>
-          );
-        })}
+        {console.log(operations)}
+        {operations !== []
+          ? operations.map(({ id, description, timeSpent }) => {
+              return (
+                <li key={id}>
+                  <Operation
+                    description={description}
+                    id={id}
+                    timeSpent={timeSpent}
+                    setReFresh={setReFresh}
+                  />
+                </li>
+              );
+            })
+          : null}
       </ul>
     </div>
   );

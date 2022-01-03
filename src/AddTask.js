@@ -40,6 +40,10 @@ function AddTask({ funtionFromParent }) {
           "Content-Type": "application/json",
         },
       });
+      const obj = await resp.json()
+      pushByFetchOnClick(obj.data)
+      // console.log(obj.data)
+
     } catch (error) {
       console.log(error);
     }

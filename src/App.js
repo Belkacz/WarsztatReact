@@ -6,19 +6,20 @@ import { API_KEY, API_URL, getTasks } from "./api/constants";
 function App() {
   const [tasks, setTasks] = useState([]);
   const [refresh, setReFresh] = useState(true);
+  const getTasksLite = async () => {
+    const resp = await fetch(`${API_URL}/tasks`, {
+      headers: { Authorization: API_KEY },
+    });
+    const { data } = await resp.json();
+    setTasks(data);
+  };
 
   useEffect(() => {
-    const getTasksLite = async () => {
-      const resp = await fetch(`${API_URL}/tasks`, {
-        headers: { Authorization: API_KEY },
-      });
-      const { data } = await resp.json();
-      setTasks(data);
-    };
+    
     console.log("useeefect");
     getTasksLite();
-    setReFresh(false);
-  }, [refresh]);
+    // setReFresh(false);
+  }, []); //refresh
 
   const remover = async (id) => {
     const resp = await fetch(`${API_URL}/tasks/${id}`, {
@@ -33,7 +34,8 @@ function App() {
 
   function reciver(obj) {
     setTasks((prev) => [...prev, obj]);
-    setReFresh(true);
+    // setReFresh(true);
+    // getTasksLite()
   }
 
   const finisher = async (id, title, description, status) => {

@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { API_KEY, API_URL, getTasks } from "./api/constants";
 
 export default function Operation({ id, description, timeSpent , setReFresh}) {
-  console.log(id);
+
   const remover = async (e, id) => {
-    console.log(id);
+
     e.preventDefault();
     const resp = await fetch(`${API_URL}/operations/${id}`, {
       method: "DELETE",
